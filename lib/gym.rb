@@ -8,26 +8,18 @@ class Gym
   def self.all
     @@all
   end
-  def all_membership(gym)
-    Membership.all.select {|key| key.gym == gym}
+  def all_membership
+    Membership.all.select {|key| key.gym == self}
   end
-  def all_lifters(gym)
-    array = []
-    all_membership(gym).select do |key| 
-        array << key.lifter
-      end
-    array
+  def all_lifters
+    self.all_membership.map {|key| key.lifter}
   end
-  def lifters_name(gym)
-    array = []
-    all_lifters(gym).select do |key| 
-      array << key.name
-    end
-    array
+  def lifters_name
+    self.all_lifters.map {|key| key.name}
   end
-  def lift_total_to_gym(gym)
+  def lift_total_to_gym
     total = 0
-    all_lifters(gym).select {|key| total += key.lift_total}
+    self.all_lifters.select {|key| total += key.lift_total}
     total
   end
 
